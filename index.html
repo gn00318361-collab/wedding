@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Opening - Tim & Eva</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700;900&family=Great+Vibes&family=Playfair+Display:wght@400;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --forest: #2C5F2D;
+    --sage: #84B59F;
+    --eucalyptus: #69A297;
+    --cream: #FDF8F0;
+    --warm: #D4A574;
+    --gold: #C4A265;
+    --bark: #5D4037;
+    --leaf: #97BC62;
+    --pink: #E8B4B8;
+    --blush: #F5D6D6;
+  }
+
+  body {
+    background: #1a1a1a;
+    font-family: 'Noto Serif TC', serif;
+    overflow: hidden;
+    cursor: default;
+  }
+
+  canvas#particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+
+  /* ============ SLIDES ============ */
+  .slide {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+    z-index: 2; pointer-events: none;
+    padding: 40px;
+  }
+  .slide.active { opacity: 1; }
+
+  /* Common backgrounds */
+  .bg-forest { background: linear-gradient(135deg, #2C5F2D 0%, #3E7B3F 30%, #69A297 70%, #84B59F 100%); }
+  .bg-cream { background: linear-gradient(135deg, var(--cream) 0%, #F0EDE5 100%); }
+  .bg-dark { background: linear-gradient(135deg, #1a3a1b 0%, #2C5F2D 50%, #1a3a1b 100%); }
+  .bg-warm { background: linear-gradient(135deg, #FDF8F0 0%, #F5E6D3 50%, #FDF8F0 100%); }
+  .bg-pink { background: linear-gradient(135deg, #FDF0F0 0%, #F5D6D6 50%, #FDF0F0 100%); }
+
+  /* ============ TYPOGRAPHY ============ */
+  .script { font-family: 'Great Vibes', cursive; }
+  .serif { font-family: 'Playfair Display', 'Noto Serif TC', serif; }
+
+  .title-lg {
+    font-size: clamp(36px, 6vw, 80px);
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .title-md {
+    font-size: clamp(24px, 4vw, 56px);
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .title-sm {
+    font-size: clamp(18px, 2.5vw, 36px);
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-align: center;
+    line-height: 1.6;
+  }
+  .subtitle {
+    font-size: clamp(14px, 1.8vw, 24px);
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  .text-cream { color: var(--cream); }
+  .text-forest { color: var(--forest); }
+  .text-warm { color: var(--warm); }
+  .text-gold { color: var(--gold); }
+  .text-pink { color: #C4868C; }
+
+  /* ============ PHOTO FRAME ============ */
+  .photo-frame {
+    border-radius: 16px;
+    padding: 10px;
+    background: white;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    overflow: hidden;
+    border: 2px solid rgba(196,162,101,0.3);
+  }
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    border-radius: 10px;
+    display: block;
+  }
+
+  /* ============ ELEMENT ANIMATIONS ============ */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: all 1s ease;
+  }
+  .slide.active .fade-up { opacity: 1; transform: translateY(0); }
+  .slide.active .fade-up.d1 { transition-delay: 0.3s; }
+  .slide.active .fade-up.d2 { transition-delay: 0.6s; }
+  .slide.active .fade-up.d3 { transition-delay: 0.9s; }
+  .slide.active .fade-up.d4 { transition-delay: 1.2s; }
+  .slide.active .fade-up.d5 { transition-delay: 1.5s; }
+
+  .fade-scale {
+    opacity: 0; transform: scale(0.8);
+    transition: all 1.2s ease;
+  }
+  .slide.active .fade-scale { opacity: 1; transform: scale(1); }
+  .slide.active .fade-scale.d1 { transition-delay: 0.3s; }
+  .slide.active .fade-scale.d2 { transition-delay: 0.8s; }
+  .slide.active .fade-scale.d3 { transition-delay: 1.3s; }
+
+  /* ============ SLIDE 1: WELCOME ============ */
+  .slide-1 .welcome-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(10px, 2vw, 25px);
+    margin: 20px 0;
+  }
+  .slide-1 .welcome-center {
+    flex-shrink: 0;
+    padding: 0 clamp(5px, 1vw, 15px);
+  }
+  .slide-1 .person-photo {
+    width: clamp(120px, 18vw, 230px);
+    height: clamp(300px, 45vw, 580px);
+    border-radius: 18px;
+    overflow: hidden;
+    background: none;
+    flex-shrink: 0;
+    border: none;
+    box-shadow: none;
+  }
+  .slide-1 .person-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+  }
+
+  /* ============ SLIDE 2: LOADING ============ */
+  .loading-heart {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 30px auto;
+  }
+  .loading-heart .heart {
+    position: absolute;
+    width: 100px;
+    height: 90px;
+    animation: heartBeat 1.2s ease-in-out infinite;
+  }
+  .loading-heart .heart::before,
+  .loading-heart .heart::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 52px;
+    height: 80px;
+    border-radius: 50px 50px 0 0;
+    background: var(--pink);
+  }
+  .loading-heart .heart::before { left: 50px; transform: rotate(-45deg); transform-origin: 0 100%; }
+  .loading-heart .heart::after { left: 0; transform: rotate(45deg); transform-origin: 100% 100%; }
+
+  @keyframes heartBeat {
+    0% { transform: scale(0.8); }
+    5% { transform: scale(0.9); }
+    10% { transform: scale(0.8); }
+    15% { transform: scale(1); }
+    50% { transform: scale(0.8); }
+    100% { transform: scale(0.8); }
+  }
+
+  .loading-bar-container {
+    width: clamp(200px, 40vw, 400px);
+    height: 6px;
+    background: rgba(232,180,184,0.3);
+    border-radius: 3px;
+    margin-top: 20px;
+    overflow: hidden;
+  }
+  .loading-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--pink), var(--warm));
+    border-radius: 3px;
+    transition: width 3.5s ease-in-out;
+  }
+  .slide.active .loading-bar { width: 100%; }
+
+  /* ============ SLIDE 3: GETTING MARRIED ============ */
+  .slide-3 .photo-frame {
+    width: clamp(220px, 35vw, 400px);
+    height: clamp(280px, 45vw, 520px);
+    margin-top: 25px;
+    border-radius: 20px;
+    padding: 12px;
+    border: 3px solid rgba(196,162,101,0.4);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+  }
+
+  /* ============ SLIDE 4: WHO WE ARE ============ */
+  .slide-4 .split-layout {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+    max-width: 900px;
+  }
+  .slide-4 .person-side {
+    flex: 1;
+    text-align: center;
+    padding: 20px;
+  }
+  .slide-4 .divider {
+    width: 2px;
+    height: clamp(300px, 50vh, 500px);
+    border-left: 2px dashed var(--sage);
+    align-self: center;
+  }
+  .slide-4 .baby-photos {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 15px;
+    flex-wrap: wrap;
+  }
+  .slide-4 .baby-photo {
+    width: clamp(130px, 18vw, 220px);
+    height: clamp(130px, 18vw, 220px);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid rgba(196,162,101,0.3);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  .slide-4 .baby-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+  .slide-4 .person-name {
+    font-size: clamp(20px, 3vw, 36px);
+    font-weight: 700;
+    color: var(--forest);
+    margin: 10px 0 5px;
+  }
+  .slide-4 .birth-year {
+    font-size: clamp(13px, 1.5vw, 18px);
+    color: var(--warm);
+    letter-spacing: 2px;
+  }
+
+  /* ============ SLIDE 6: IN LOVE ============ */
+  .slide-6 .love-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(30px, 5vw, 70px);
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+  }
+  .slide-6 .person-move {
+    width: clamp(150px, 25vw, 300px);
+    height: clamp(200px, 35vw, 400px);
+    overflow: hidden;
+    border-radius: 16px;
+    transition: transform 2s ease;
+  }
+  .slide-6 .person-move img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+  .slide-6 .person-left { transform: translateX(60px); }
+  .slide-6 .person-right { transform: translateX(-60px); }
+  .slide.active .slide-6 .person-left,
+  .slide.active .person-left { transform: translateX(0px); }
+  .slide.active .slide-6 .person-right,
+  .slide.active .person-right { transform: translateX(0px); }
+
+  .slide-6 .love-heart {
+    font-size: clamp(40px, 6vw, 80px);
+    position: absolute;
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 1.5s ease 1.5s;
+  }
+  .slide.active .slide-6 .love-heart { opacity: 1; }
+
+  .slide-6 .role-label {
+    font-size: clamp(12px, 1.5vw, 18px);
+    color: var(--warm);
+    letter-spacing: 2px;
+    margin-top: 10px;
+    text-align: center;
+  }
+  .slide-6 .role-name {
+    font-size: clamp(18px, 2.5vw, 30px);
+    font-weight: 600;
+    color: var(--forest);
+    text-align: center;
+  }
+
+  /* ============ SLIDES WITH PHOTO FRAMES ============ */
+  .slide-with-photo .photo-frame {
+    width: clamp(220px, 35vw, 400px);
+    height: clamp(280px, 45vw, 520px);
+    margin-top: 25px;
+    border-radius: 20px;
+    padding: 12px;
+    border: 3px solid rgba(196,162,101,0.4);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+  }
+
+  /* ============ SLIDE 9: PHONE + PET ============ */
+  .slide-9 .icon-row {
+    display: flex;
+    gap: 20px;
+    margin-top: 15px;
+    font-size: clamp(30px, 4vw, 50px);
+  }
+
+  /* ============ SLIDE 17: INSTAGRAM ============ */
+  .ig-handle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: clamp(16px, 2.2vw, 28px);
+    color: var(--forest);
+    margin: 8px 0;
+    letter-spacing: 1px;
+  }
+  .ig-handle .ig-icon { font-size: 1.2em; }
+
+  /* ============ SLIDE 19: LEFT PHOTO ============ */
+  .slide-19 .side-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(20px, 4vw, 60px);
+    width: 100%;
+    max-width: 900px;
+  }
+  .slide-19 .photo-frame {
+    width: clamp(180px, 25vw, 300px);
+    height: clamp(240px, 38vw, 420px);
+    flex-shrink: 0;
+  }
+  .slide-19 .photo-frame img {
+    object-position: center center;
+  }
+  .slide-19 .text-side {
+    text-align: center;
+  }
+
+  /* ============ START OVERLAY ============ */
+  .start-overlay {
+    position: fixed; inset: 0;
+    background: linear-gradient(135deg, #2C5F2D, #1a3a1b);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    z-index: 1000; cursor: pointer;
+    transition: opacity 1.5s ease;
+  }
+  .start-overlay.hidden { opacity: 0; pointer-events: none; }
+  .start-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(32px, 5vw, 56px);
+    color: var(--cream);
+    margin-bottom: 20px;
+    animation: pulse 2.5s ease infinite;
+  }
+  .start-sub { color: rgba(253,248,240,0.5); font-size: 14px; letter-spacing: 3px; }
+
+  /* ============ PROGRESS & NAV ============ */
+  .progress-bar {
+    position: fixed; top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--sage), var(--warm));
+    z-index: 100;
+    transition: width 0.8s ease;
+  }
+  .nav-hint {
+    position: fixed; bottom: 20px; left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.35);
+    font-size: 12px; letter-spacing: 2px;
+    z-index: 100;
+  }
+  .slide-counter {
+    position: fixed; top: 12px; right: 20px;
+    color: rgba(255,255,255,0.3);
+    font-size: 12px; letter-spacing: 1px;
+    z-index: 100;
+  }
+
+  /* ============ ANIMATIONS ============ */
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeScale {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  @keyframes bounceIn {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .float { animation: float 3s ease-in-out infinite; }
+  .bounce-in {
+    opacity: 0; transform: scale(0);
+    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  .slide.active .bounce-in { opacity: 1; transform: scale(1); }
+  .slide.active .bounce-in.d1 { transition-delay: 0.5s; }
+  .slide.active .bounce-in.d2 { transition-delay: 1s; }
+
+  /* ============ DECORATIVE ============ */
+  .emoji-big {
+    font-size: clamp(40px, 6vw, 80px);
+    display: block;
+    margin: 15px 0;
+  }
+  .emoji-md {
+    font-size: clamp(28px, 4vw, 50px);
+  }
+  .spacer { height: 15px; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .slide-1 .welcome-layout { flex-direction: row; flex-wrap: nowrap; gap: 8px; }
+    .slide-1 .person-photo { width: 130px; height: 240px; }
+    .slide-1 .welcome-center .script { font-size: 36px !important; }
+    .slide-4 .split-layout { gap: 0; }
+    .slide-4 .person-side { padding: 10px; }
+    .slide-4 .baby-photo { width: 100px; height: 100px; }
+    .slide-6 .love-layout { gap: 20px; }
+    .slide-19 .side-layout { flex-direction: column; }
+    .slide { padding: 25px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Start overlay removed: auto-play on load -->
+
+<!-- Particles -->
+<canvas id="particles"></canvas>
+
+<!-- Progress bar -->
+<div class="progress-bar" id="progressBar"></div>
+<div class="slide-counter" id="slideCounter"></div>
+
+<!-- ===== SLIDE 1: Welcome ===== -->
+<div class="slide bg-forest slide-1" id="slide1">
+  <div class="script title-sm text-cream fade-up" style="margin-bottom:15px;">Welcome to our Wedding</div>
+  <div class="welcome-layout">
+    <div class="person-photo fade-scale d1">
+      <img src="男生獨照.jpg" alt="Tim">
+    </div>
+    <div class="welcome-center fade-up d2">
+      <div class="script" style="font-size:clamp(48px,8vw,100px); color:var(--cream); text-shadow:0 4px 30px rgba(0,0,0,0.3);">Tim <span style="color:var(--warm)">&</span> Eva</div>
+    </div>
+    <div class="person-photo fade-scale d3">
+      <img src="女生獨照.jpg" alt="Eva">
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 2: Loading ===== -->
+<div class="slide bg-cream slide-2" id="slide2">
+  <div class="loading-heart fade-scale">
+    <div class="heart"></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="title-sm text-forest fade-up d1" style="font-weight:300;">Loading...</div>
+  <div class="loading-bar-container fade-up d2">
+    <div class="loading-bar" id="loadingBar"></div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 3: We Are Getting Married ===== -->
+<div class="slide bg-warm slide-3 slide-with-photo" id="slide3">
+  <div class="script title-lg text-forest fade-up" style="text-shadow:0 2px 15px rgba(0,0,0,0.08);">We are getting married!</div>
+  <div class="photo-frame fade-scale d2">
+    <img src="3.we%20are%20getting%20married%EF%BC%81.jpg" alt="Getting Married">
+  </div>
+</div>
+
+<!-- ===== SLIDE 4: Who We Are ===== -->
+<div class="slide bg-cream slide-4" id="slide4">
+  <div class="title-md text-forest fade-up" style="margin-bottom:25px;">＼我們是／</div>
+  <div class="split-layout">
+    <div class="person-side fade-up d1">
+      <div class="person-name">宣廷</div>
+      <div class="birth-year">1994年出生</div>
+      <div class="baby-photos">
+        <div class="baby-photo"><img src="4.%E6%88%91%E5%80%91%E6%98%AF%28%E5%B0%8F%E5%AE%A3%E5%BB%B71%29.jpg" alt="小宣廷"></div>
+        <div class="baby-photo"><img src="4.%E6%88%91%E5%80%91%E6%98%AF%28%E5%B0%8F%E5%AE%A3%E5%BB%B72%29.jpg" alt="小宣廷"></div>
+        <div class="baby-photo"><img src="4.%E6%88%91%E5%80%91%E6%98%AF%28%E5%B0%8F%E5%AE%A3%E5%BB%B73%29.jpg" alt="小宣廷"></div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="person-side fade-up d2">
+      <div class="person-name">依潔</div>
+      <div class="birth-year">1994年出生</div>
+      <div class="baby-photos">
+        <div class="baby-photo"><img src="4.%E6%88%91%E5%80%91%E6%98%AF%28%E5%B0%8F%E4%BE%9D%E6%BD%941%29.jpg" alt="小依潔"></div>
+        <div class="baby-photo"><img src="4.%E6%88%91%E5%80%91%E6%98%AF%28%E5%B0%8F%E4%BE%9D%E6%BD%942%29.jpg" alt="小依潔"></div>
+        <div class="baby-photo"><img src="4.%E6%88%91%E5%80%91%E6%98%AF%28%E5%B0%8F%E4%BE%9D%E6%BD%943%29.jpg" alt="小依潔"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 5: Then... ===== -->
+<div class="slide bg-dark" id="slide5">
+  <div class="title-md text-cream fade-up" style="font-weight:300;">然後⋯</div>
+</div>
+
+<!-- ===== SLIDE 6: We Fell In Love ===== -->
+<div class="slide bg-warm slide-6" id="slide6">
+  <div class="title-md text-forest fade-up" style="margin-bottom:20px;">＼我們相愛啦！／</div>
+  <div class="love-layout">
+    <div style="text-align:center;">
+      <div class="person-move person-left fade-scale d1">
+        <img src="6.%E6%88%91%E5%80%91%E7%9B%B8%E6%84%9B%E5%95%A6%EF%BC%81%28%E5%81%9A%E4%B8%80%E5%80%8B%E5%8B%95%E7%95%AB%E6%8A%8A%E5%85%A9%E5%80%8B%E4%BA%BA%E5%8E%BB%E8%83%8C_%E4%B9%8B%E5%BE%8C%E6%BC%B8%E6%BC%B8%E9%9D%A0%E4%B8%80%E8%B5%B7%29.jpg" alt="Our Love">
+      </div>
+      <div class="role-label fade-up d3">Today Bride</div>
+      <div class="role-name fade-up d3">依潔</div>
+    </div>
+    <div class="love-heart bounce-in d2">❤️</div>
+    <div style="text-align:center;">
+      <div class="person-move person-right fade-scale d1">
+        <img src="1.%E6%93%B7%E5%8F%96%E5%AE%A3%E5%BB%B7.jpg" alt="宣廷">
+      </div>
+      <div class="role-label fade-up d3">Today Groom</div>
+      <div class="role-name fade-up d3">宣廷</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 7: Wedding Starting ===== -->
+<div class="slide bg-forest slide-with-photo" id="slide7">
+  <div class="title-md text-cream fade-up">婚禮即將開始囉～</div>
+  <div class="photo-frame fade-scale d2">
+    <img src="7.%E5%A9%9A%E7%A6%AE%E5%8D%B3%E5%B0%87%E9%96%8B%E5%A7%8B%E5%9B%89%EF%BD%9E.jpg" alt="婚禮即將開始">
+  </div>
+</div>
+
+<!-- ===== SLIDE 8: Please Sit Down ===== -->
+<div class="slide bg-warm slide-with-photo" id="slide8">
+  <div class="title-md text-forest fade-up">請大家盡快就座<span class="emoji-md">🩷</span></div>
+  <div class="photo-frame fade-scale d2">
+    <img src="8.%E8%AB%8B%E5%A4%A7%E5%AE%B6%E7%9B%A1%E5%BF%AB%E5%B0%B1%E5%BA%A7.jpg" alt="請就座">
+  </div>
+</div>
+
+<!-- ===== SLIDE 9: Phone Silent ===== -->
+<div class="slide bg-cream slide-9" id="slide9">
+  <div class="slide-9 icon-row fade-up">📱 🐱</div>
+  <div class="spacer"></div>
+  <div class="title-md text-forest fade-up d1">請記得把手機和寶貝</div>
+  <div class="title-md text-forest fade-up d2">調成震動模式<span class="emoji-md">🩷</span></div>
+</div>
+
+<!-- ===== SLIDE 10: Good Day ===== -->
+<div class="slide bg-forest slide-with-photo" id="slide10">
+  <div class="title-md text-cream fade-up">今天是適合相聚的好日子！</div>
+  <div class="photo-frame fade-scale d2">
+    <img src="10.%20%E4%BB%8A%E5%A4%A9%E6%98%AF%E9%81%A9%E5%90%88%E7%9B%B8%E8%81%9A%E7%9A%84%E5%A5%BD%E6%97%A5%E5%AD%90%EF%BC%81.jpg" alt="好日子">
+  </div>
+</div>
+
+<!-- ===== SLIDE 11: Thank You ===== -->
+<div class="slide bg-warm" id="slide11">
+  <div class="title-lg text-forest fade-up">＼謝謝遠道而來的你們／</div>
+  <div class="spacer"></div>
+  <div class="emoji-big fade-scale d2">🥰</div>
+</div>
+
+<!-- ===== SLIDE 12: Reminders ===== -->
+<div class="slide bg-dark" id="slide12">
+  <div class="emoji-big fade-scale">📢</div>
+  <div class="title-md text-cream fade-up d1">進場前</div>
+  <div class="title-sm text-cream fade-up d2" style="font-weight:300; margin-top:10px;">我們有幾項溫馨小提醒</div>
+  <div class="title-sm text-gold fade-up d3">請大家注意 ✨</div>
+</div>
+
+<!-- ===== SLIDE 13: Food ===== -->
+<div class="slide bg-cream" id="slide13">
+  <div class="emoji-big fade-scale">🍽️</div>
+  <div class="title-md text-forest fade-up d1">今天有許多豐盛佳餚</div>
+  <div class="title-sm text-forest fade-up d2">請大家一定要吃飽唷</div>
+  <div class="subtitle text-warm fade-up d3" style="margin-top:15px;">（不夠吃可以吃隔壁桌的）</div>
+</div>
+
+<!-- ===== SLIDE 14: Drinks ===== -->
+<div class="slide bg-warm" id="slide14">
+  <div class="emoji-big fade-scale">🍻</div>
+  <div class="title-md text-forest fade-up d1">今日酒水無限暢飲</div>
+  <div class="title-sm text-forest fade-up d2">請適量飲用</div>
+  <div class="title-sm text-pink fade-up d3" style="font-weight:600; margin-top:10px;">切勿喝酒開車唷！</div>
+</div>
+
+<!-- ===== SLIDE 15: Photographer ===== -->
+<div class="slide bg-cream" id="slide15">
+  <div class="emoji-big fade-scale">📸</div>
+  <div class="title-md text-forest fade-up d1">今日有專業的攝影師</div>
+  <div class="title-sm text-forest fade-up d2">請大家不要害羞唷 😄</div>
+</div>
+
+<!-- ===== SLIDE 16: Don't Block Camera ===== -->
+<div class="slide bg-forest slide-with-photo" id="slide16">
+  <div class="title-md text-cream fade-up">也請不要擋到</div>
+  <div class="title-md text-cream fade-up d1">攝影師的鏡頭唷</div>
+  <div class="photo-frame fade-scale d2">
+    <img src="16.%20%E4%B9%9F%E8%AB%8B%E4%B8%8D%E8%A6%81%E6%93%8B%E5%88%B0%E6%94%9D%E5%BD%B1%E5%B8%AB%E7%9A%84%E9%8F%A1%E9%A0%AD%E5%94%B7.jpg" alt="攝影師">
+  </div>
+</div>
+
+<!-- ===== SLIDE 17: Tag Us ===== -->
+<div class="slide bg-cream" id="slide17">
+  <div class="title-sm text-forest fade-up">如果有拍照錄影</div>
+  <div class="title-md text-forest fade-up d1" style="margin:10px 0;">別忘了標記我們唷</div>
+  <div class="spacer"></div>
+  <div class="ig-handle fade-up d2">
+    <span class="ig-icon">📷</span>
+    <span style="font-weight:600;">eva93510</span>
+  </div>
+  <div class="ig-handle fade-up d3">
+    <span class="ig-icon">📷</span>
+    <span style="font-weight:600;">5xuan_tingwu</span>
+  </div>
+</div>
+
+<!-- ===== SLIDE 18: Lastly ===== -->
+<div class="slide bg-dark" id="slide18">
+  <div class="title-md text-cream fade-up" style="font-weight:300;">最後</div>
+</div>
+
+<!-- ===== SLIDE 19: First Time ===== -->
+<div class="slide bg-warm slide-19" id="slide19">
+  <div class="side-layout">
+    <div class="photo-frame fade-scale">
+      <img src="19.%E5%9B%A0%E7%82%BA%E6%88%91%E5%80%91%E6%98%AF%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%B5%90%E5%A9%9A.jpg" alt="第一次結婚">
+    </div>
+    <div class="text-side">
+      <div class="title-md text-forest fade-up d1">因為我們是第一次結婚</div>
+      <div class="title-sm text-forest fade-up d2" style="font-weight:300; margin-top:10px;">所以非常緊張</div>
+      <div class="emoji-big fade-scale d3">😳</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 20: Ready ===== -->
+<div class="slide bg-dark" id="slide20">
+  <div class="title-lg text-cream fade-up">＼但是！／</div>
+  <div class="title-md text-gold fade-up d2" style="margin-top:15px;">我們已經準備好了</div>
+  <div class="emoji-big fade-scale d3">💪</div>
+</div>
+
+<!-- ===== SLIDE 21: Cheers ===== -->
+<div class="slide bg-forest" id="slide21">
+  <div class="title-sm text-cream fade-up">請大家發揮你們的愛心</div>
+  <div class="title-sm text-cream fade-up d1">給予我們最熱情的</div>
+  <div class="title-lg text-cream fade-up d2" style="margin-top:10px;">歡呼及掌聲 👏🏼</div>
+</div>
+
+<!-- ===== SLIDE 22: Let's Begin ===== -->
+<div class="slide bg-warm slide-with-photo" id="slide22">
+  <div class="title-lg text-forest fade-up">我們的婚禮要開始囉</div>
+  <div class="photo-frame fade-scale d2">
+    <img src="22.%20%E6%88%91%E5%80%91%E7%9A%84%E5%A9%9A%E7%A6%AE%E8%A6%81%E9%96%8B%E5%A7%8B%E5%9B%89.jpg" alt="開始囉">
+  </div>
+</div>
+
+<!-- Nav hint -->
+<div class="nav-hint" id="navHint">按 → 或點擊進入下一頁</div>
+
+<script>
+// ===== CONFIG =====
+const TOTAL_SLIDES = 22;
+let currentSlide = 0;
+let isTransitioning = false;
+let showStarted = false;
+let autoTimer = null;
+
+// Duration per slide (ms)
+const durations = [
+  7000,  // 1: Welcome
+  5000,  // 2: Loading
+  6000,  // 3: Getting married
+  9000,  // 4: Who we are
+  3000,  // 5: Then...
+  8000,  // 6: In love
+  6000,  // 7: Wedding starting
+  6000,  // 8: Sit down
+  6000,  // 9: Phone silent
+  6000,  // 10: Good day
+  5000,  // 11: Thank you
+  6000,  // 12: Reminders
+  6000,  // 13: Food
+  6000,  // 14: Drinks
+  5000,  // 15: Photographer
+  6000,  // 16: Don't block
+  7000,  // 17: Tag us
+  3000,  // 18: Lastly
+  7000,  // 19: First time
+  5000,  // 20: Ready
+  7000,  // 21: Cheers
+  8000,  // 22: Let's begin
+];
+
+// ===== PARTICLES =====
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+class Leaf {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = -20;
+    this.size = 3 + Math.random() * 6;
+    this.speedY = 0.3 + Math.random() * 1;
+    this.speedX = -0.3 + Math.random() * 0.6;
+    this.rotation = Math.random() * Math.PI * 2;
+    this.rotSpeed = -0.015 + Math.random() * 0.03;
+    this.opacity = 0.15 + Math.random() * 0.3;
+    this.wobble = Math.random() * Math.PI * 2;
+    this.wobbleSpeed = 0.015 + Math.random() * 0.02;
+    const colors = ['#97BC62','#84B59F','#69A297','#C4A265','#D4A574','#E8B4B8','#A5D6A7'];
+    this.color = colors[Math.floor(Math.random() * colors.length)];
+  }
+  update() {
+    this.y += this.speedY;
+    this.wobble += this.wobbleSpeed;
+    this.x += this.speedX + Math.sin(this.wobble) * 0.3;
+    this.rotation += this.rotSpeed;
+    if (this.y > canvas.height + 20) this.reset();
+  }
+  draw() {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rotation);
+    ctx.globalAlpha = this.opacity;
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, this.size, this.size * 0.4, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+for (let i = 0; i < 30; i++) {
+  const leaf = new Leaf();
+  leaf.y = Math.random() * canvas.height;
+  particles.push(leaf);
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// ===== SLIDE MANAGEMENT =====
+function showSlide(idx) {
+  // Hide all slides
+  for (let i = 1; i <= TOTAL_SLIDES; i++) {
+    var s = document.getElementById('slide' + i);
+    if (s) s.classList.remove('active');
+  }
+  // Show target slide
+  var target = document.getElementById('slide' + (idx + 1));
+  if (target) target.classList.add('active');
+  currentSlide = idx;
+
+  // Update progress
+  document.getElementById('progressBar').style.width = ((idx + 1) / TOTAL_SLIDES * 100) + '%';
+  document.getElementById('slideCounter').textContent = (idx + 1) + ' / ' + TOTAL_SLIDES;
+}
+
+function scheduleNext() {
+  if (autoTimer) clearTimeout(autoTimer);
+  autoTimer = setTimeout(function() {
+    if (currentSlide < TOTAL_SLIDES - 1) {
+      showSlide(currentSlide + 1);
+      scheduleNext();
+    }
+  }, durations[currentSlide] || 5000);
+}
+
+function nextSlide() {
+  if (currentSlide < TOTAL_SLIDES - 1) {
+    showSlide(currentSlide + 1);
+    scheduleNext();
+  }
+}
+function prevSlide() {
+  if (currentSlide > 0) {
+    showSlide(currentSlide - 1);
+    scheduleNext();
+  }
+}
+
+// ===== AUTO START ON PAGE LOAD =====
+window.onload = function() {
+  showStarted = true;
+  document.body.style.cursor = 'default';
+  showSlide(0);
+  scheduleNext();
+};
+
+// ===== NAVIGATION (manual override) =====
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+    e.preventDefault(); nextSlide();
+  }
+  if (e.key === 'ArrowLeft') {
+    e.preventDefault(); prevSlide();
+  }
+});
+
+document.addEventListener('click', function() {
+  if (!showStarted) return;
+  nextSlide();
+});
+</script>
+</body>
+</html>
