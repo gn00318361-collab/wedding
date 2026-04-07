@@ -1,136 +1,136 @@
-# Wedding Opening Slideshow
+# 婚禮開場投影片 Wedding Opening Slideshow
 
-A beautiful, single-file HTML wedding opening slideshow with auto-play animations, particle effects, and responsive design. Perfect for projecting at wedding banquets to welcome guests before the ceremony begins.
+一個漂亮的單檔 HTML 婚禮開場投影片，有自動播放動畫、飄落粒子特效和響應式設計。適合在婚宴現場投影，在儀式開始前迎接賓客。
 
-## Demo
+## Demo 展示
 
-> Replace with your GitHub Pages URL after deployment:
+> 部署到 GitHub Pages 後，把下面的網址換成你的：
 >
-> `https://<your-username>.github.io/wedding-opening/`
+> `https://<你的帳號>.github.io/wedding-opening/`
 
-## Features
+## 功能特色
 
-- 22 slides with smooth fade transitions and auto-play timing
-- Falling leaf particle animation (canvas-based)
-- Responsive layout for projectors, laptops, and tablets
-- Keyboard and click navigation (Arrow keys / Space / Click)
-- Progress bar and slide counter
-- Loading heart animation
-- Google Fonts: Noto Serif TC, Great Vibes, Playfair Display
-- Zero dependencies, single HTML file, no build step required
+- 22 頁投影片，搭配滑順的淡入淡出轉場與自動播放計時
+- 飄落葉子粒子動畫（Canvas 繪製）
+- 響應式排版，適用投影機、筆電、平板
+- 支援鍵盤和滑鼠操作（方向鍵 / 空白鍵 / 點擊）
+- 頂部進度條與頁數顯示
+- 愛心跳動載入動畫
+- Google 字型：思源宋體、Great Vibes、Playfair Display
+- 零依賴、單一 HTML 檔、不需要任何編譯步驟
 
-## Slide Flow
+## 投影片流程
 
-| # | Content | Duration |
-|---|---------|----------|
-| 1 | Welcome + couple photos | 7s |
-| 2 | Loading heart animation | 5s |
-| 3 | "We are getting married!" | 6s |
-| 4 | Who we are (childhood photos) | 9s |
-| 5 | Transition: "Then..." | 3s |
-| 6 | "We fell in love!" (animated) | 8s |
-| 7 | "Wedding is about to start" | 6s |
-| 8 | "Please take your seats" | 6s |
-| 9 | "Phones on silent" | 6s |
-| 10 | "A great day to gather" | 6s |
-| 11 | "Thank you for coming" | 5s |
-| 12 | Reminders intro | 6s |
-| 13 | "Enjoy the food" | 6s |
-| 14 | "Drinks are unlimited" | 6s |
-| 15 | "We have a photographer" | 5s |
-| 16 | "Don't block the camera" | 6s |
-| 17 | "Tag us on Instagram" | 7s |
-| 18 | Transition: "Lastly" | 3s |
-| 19 | "It's our first time getting married" | 7s |
-| 20 | "But we're ready!" | 5s |
-| 21 | "Give us your cheers!" | 7s |
-| 22 | "Our wedding begins now" | 8s |
+| 頁 | 內容 | 秒數 |
+|---|------|------|
+| 1 | 歡迎 + 新人獨照 | 7 秒 |
+| 2 | 愛心載入動畫 | 5 秒 |
+| 3 | We are getting married! | 6 秒 |
+| 4 | 我們是誰（小時候照片） | 9 秒 |
+| 5 | 過場：然後⋯ | 3 秒 |
+| 6 | 我們相愛啦！（動畫靠近） | 8 秒 |
+| 7 | 婚禮即將開始囉～ | 6 秒 |
+| 8 | 請大家盡快就座 | 6 秒 |
+| 9 | 手機和寶貝調成震動 | 6 秒 |
+| 10 | 今天是適合相聚的好日子！ | 6 秒 |
+| 11 | 謝謝遠道而來的你們 | 5 秒 |
+| 12 | 溫馨小提醒 | 6 秒 |
+| 13 | 請大家一定要吃飽唷 | 6 秒 |
+| 14 | 酒水無限暢飲 | 6 秒 |
+| 15 | 今日有專業攝影師 | 5 秒 |
+| 16 | 不要擋到攝影師鏡頭 | 6 秒 |
+| 17 | 別忘了標記我們 IG | 7 秒 |
+| 18 | 過場：最後 | 3 秒 |
+| 19 | 我們是第一次結婚，很緊張 | 7 秒 |
+| 20 | 但是！我們準備好了 | 5 秒 |
+| 21 | 請給我們歡呼及掌聲 | 7 秒 |
+| 22 | 我們的婚禮要開始囉 | 8 秒 |
 
-## Quick Start
+## 快速開始
 
-1. Clone or download this repository.
-2. Put your photos in the same folder as `wedding-opening.html`.
-3. Open `wedding-opening.html` in a browser.
-4. The slideshow will auto-play immediately.
+1. 下載或 Clone 這個專案。
+2. 把你的照片放到跟 `index.html` 同一個資料夾。
+3. 用瀏覽器打開 `index.html`。
+4. 投影片會自動開始播放。
 
-## How to Customize
+## 如何客製化
 
-### Replace Photos
+### 換照片
 
-All images are referenced by filename in the HTML. Replace the following files with your own photos (keep the same filenames, or update the `src` attributes in the HTML):
+所有圖片都是用檔名引用的。把下面的檔案換成你自己的照片（維持同樣檔名，或到 HTML 裡改 `src` 路徑）：
 
-| Filename | Description |
-|----------|-------------|
-| `男生獨照.jpg` | Groom solo photo (slide 1) |
-| `女生獨照.jpg` | Bride solo photo (slide 1) |
-| `3.we are getting married！.jpg` | Couple photo (slide 3) |
-| `4.我們是(小宣廷1).jpg` ~ `(小宣廷3).jpg` | Groom childhood photos (slide 4) |
-| `4.我們是(小依潔1).jpg` ~ `(小依潔3).jpg` | Bride childhood photos (slide 4) |
-| `6.我們相愛啦！(...).jpg` | Bride photo for love slide (slide 6) |
-| `1.擷取宣廷.jpg` | Groom photo for love slide (slide 6) |
-| `7.婚禮即將開始囉～.jpg` | Couple photo (slide 7) |
-| `8.請大家盡快就座.jpg` | Couple photo (slide 8) |
-| `10. 今天是適合相聚的好日子！.jpg` | Couple photo (slide 10) |
-| `16. 也請不要擋到攝影師的鏡頭唷.jpg` | Fun photo (slide 16) |
-| `19.因為我們是第一次結婚.jpg` | Couple photo (slide 19) |
-| `22. 我們的婚禮要開始囉.jpg` | Couple photo (slide 22) |
+| 檔名 | 說明 |
+|------|------|
+| `男生獨照.jpg` | 新郎獨照（第 1 頁） |
+| `女生獨照.jpg` | 新娘獨照（第 1 頁） |
+| `3.we are getting married！.jpg` | 合照（第 3 頁） |
+| `4.我們是(小宣廷1).jpg` ～ `(小宣廷3).jpg` | 新郎小時候照片（第 4 頁） |
+| `4.我們是(小依潔1).jpg` ～ `(小依潔3).jpg` | 新娘小時候照片（第 4 頁） |
+| `6.我們相愛啦！(...).jpg` | 新娘照片（第 6 頁） |
+| `1.擷取宣廷.jpg` | 新郎照片（第 6 頁） |
+| `7.婚禮即將開始囉～.jpg` | 合照（第 7 頁） |
+| `8.請大家盡快就座.jpg` | 合照（第 8 頁） |
+| `10. 今天是適合相聚的好日子！.jpg` | 合照（第 10 頁） |
+| `16. 也請不要擋到攝影師的鏡頭唷.jpg` | 趣味照片（第 16 頁） |
+| `19.因為我們是第一次結婚.jpg` | 合照（第 19 頁） |
+| `22. 我們的婚禮要開始囉.jpg` | 合照（第 22 頁） |
 
-### Edit Names and Text
+### 改名字和文字
 
-Open `wedding-opening.html` in any text editor and search/replace:
+用任何文字編輯器打開 `index.html`，搜尋並取代：
 
-- `Tim` / `Eva` — couple's English names
-- `宣廷` / `依潔` — couple's Chinese names
-- `1994年出生` — birth years
-- `eva93510` / `5xuan_tingwu` — Instagram handles
-- Any slide text can be freely edited
+- `Tim` / `Eva` — 新人英文名
+- `宣廷` / `依潔` — 新人中文名
+- `1994年出生` — 出生年份
+- `eva93510` / `5xuan_tingwu` — Instagram 帳號
+- 任何投影片上的文字都可以自由修改
 
-### Adjust Timing
+### 調整播放時間
 
-Find the `durations` array in the `<script>` section to change how long each slide displays (values in milliseconds):
+在 `<script>` 區塊裡找到 `durations` 陣列，修改每頁停留的時間（單位：毫秒）：
 
 ```javascript
 const durations = [
-  7000,  // 1: Welcome
-  5000,  // 2: Loading
-  // ... edit as needed
+  7000,  // 第 1 頁：歡迎
+  5000,  // 第 2 頁：載入動畫
+  // ... 依需求修改
 ];
 ```
 
-### Color Scheme
+### 改配色
 
-CSS custom properties at the top of the file control the color palette:
+檔案最上方的 CSS 變數控制整體配色：
 
 ```css
 :root {
-  --forest: #2C5F2D;    /* Primary green */
-  --sage: #84B59F;       /* Light green */
-  --cream: #FDF8F0;      /* Background cream */
-  --warm: #D4A574;       /* Warm accent */
-  --gold: #C4A265;       /* Gold accent */
-  --pink: #E8B4B8;       /* Pink accent */
+  --forest: #2C5F2D;    /* 主色綠 */
+  --sage: #84B59F;       /* 淺綠 */
+  --cream: #FDF8F0;      /* 米白背景 */
+  --warm: #D4A574;       /* 暖色調 */
+  --gold: #C4A265;       /* 金色 */
+  --pink: #E8B4B8;       /* 粉色 */
 }
 ```
 
-## Deploy to GitHub Pages
+## 部署到 GitHub Pages
 
-1. Create a new repository on GitHub.
-2. Upload `wedding-opening.html` (rename to `index.html`) and all image files.
-3. Go to **Settings > Pages**, set source to `main` branch.
-4. Your slideshow will be live at `https://<username>.github.io/<repo-name>/`.
+1. 在 GitHub 建立一個新的 Repository。
+2. 把 `index.html` 和所有圖片上傳上去。
+3. 到 **Settings > Pages**，來源選 `main` 分支。
+4. 你的投影片就會上線：`https://<帳號>.github.io/<repo名稱>/`
 
-## Navigation
+## 操作方式
 
-| Input | Action |
-|-------|--------|
-| Auto | Slides advance automatically |
-| → / Space / Enter / Click | Next slide |
-| ← | Previous slide |
+| 操作 | 功能 |
+|------|------|
+| 自動 | 投影片會自動往下播 |
+| → / 空白鍵 / Enter / 點擊 | 下一頁 |
+| ← | 上一頁 |
 
-## Browser Support
+## 瀏覽器支援
 
-Works in all modern browsers (Chrome, Firefox, Safari, Edge). Requires an internet connection for Google Fonts loading; falls back to system serif fonts if offline.
+支援所有主流瀏覽器（Chrome、Firefox、Safari、Edge）。需要網路連線載入 Google 字型，離線時會自動使用系統內建字型。
 
-## License
+## 授權
 
-MIT License — free to use, modify, and share.
+MIT License — 免費使用、修改、分享。
